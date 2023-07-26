@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "llama-lime"
+version = "0.1.0"
+description = "Explainable AI with Large Language Models"
+authors = ["chrisaddy <chris.william.addy@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "llama_lime"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+openai = "^0.27.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
