@@ -35,10 +35,7 @@ explainer = Explainer(random_forest, language_model="openai/gpt-4")
 explanations = explainer.explain(X)
 ```
 
-For more detailed usage, see our example Jupyter notebook.
-
-Documentation
-For more detailed documentation, see here.
+For more detailed usage, see our Jupyter notebooks in the `examples/` directory.
 
 Contributing
 We welcome contributions! See our contribution guide for more details.
