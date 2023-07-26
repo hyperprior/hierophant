@@ -1,2 +1,5 @@
 setup:
-    poetry install
+  poetry install
+
+test:
+  poetry run pytest -vvv

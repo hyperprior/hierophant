@@ -1,23 +1,29 @@
-import openai
 import os
 
+import openai
+import torch
+
+
 class Explainer:
-    def __init__(self, model, language_model = "openai/gpt-4"):
+    def __init__(self, model, language_model="openai/gpt-4"):
         self.model = model
         self.host, self.language_model = language_model.split("/")
         if self.host == "openai":
             self.openai_api_key = os.getenv("OPENAI_API_KEY")
             if not self.openai_api_key:
-                raise ValueError("openai model chosen, missing `OPENAI_API_KEY` in environment")
+                raise ValueError(
+                    "openai model chosen, missing `OPENAI_API_KEY` in environment"
+                )
 
-    def explain(self, X, y=None):
-        # Generate predictions
-        y_pred = self.model.predict(X)
+    def explain(self, X, y=None, y_pred=None):
+        if isinstance(self.model, torch.nn.Module):
+            X_var = Variable(torch.FloatTensor(X))
+            y_pred = self.model(X_var)
+            y_pred = F.softmax(y_pred, dim=1).data.numpy()
+        else:
+            y_pred = self.model.predict_proba(X)
 
-        # Generate explanations
-        explanations = self._generate_explanations(X, y, y_pred)
-
-        return explanations
+        return self._generate_explanations(X, y, y_pred)
 
     def _generate_explanations(self, X, y, y_pred):
         prompt = f"""
