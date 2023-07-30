@@ -1,4 +1,4 @@
-# LLama LIME
+# LLaMa LIME
 
 This Python library use the power of large language models to provide intuitive, human-readable explanations for the predictions made by machine learning models.
 
