@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Llama-lime – random_forest_explanation</title>
+<title>Llama-lime - Explaining a Random Forest</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -58,6 +92,9 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -118,16 +155,60 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#create-an-explainer" id="toc-create-an-explainer" class="nav-link active" data-scroll-target="#create-an-explainer">Create an explainer</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Explaining a Random Forest</h1>
+</div>
 
 
-<p>{ “cells”: [ { “cell_type”: “code”, “execution_count”: 1, “id”: “28d8976f-a131-49bc-b822-d83427600882”, “metadata”: {}, “outputs”: [ { “name”: “stderr”, “output_type”: “stream”, “text”: [ “IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html” ] } ], “source”: [ “from llama_lime.explainer import Explainer”, “from sklearn.ensemble import RandomForestClassifier”, “from sklearn.datasets import load_iris”, “import shap”, “import numpy as np” ] }, { “cell_type”: “code”, “execution_count”: 2, “id”: “6865bc11-b01e-4baa-96f1-8f93f400153b”, “metadata”: {}, “outputs”: [ { “data”: { “text/html”: [ “], “text/plain”: [ “RandomForestClassifier()” ] }, “execution_count”: 2, “metadata”: {}, “output_type”: “execute_result” } ], “source”: [ “random_forest = RandomForestClassifier()”, “# For simplicity, we’ll just fit the model on some dummy data”, “iris = load_iris()”, “# make up new names so maybe it won’t know this is a famous dataset?”, “feature_names = ["length of table", "width of table", "length of dresser", "width of dresser"]”, “X, y = iris.data, iris.target”, “random_forest.fit(X, y)” ] }, { “cell_type”: “code”, “execution_count”: null, “id”: “943ccdc6-de58-4637-a9c5-c8b172545603”, “metadata”: {}, “outputs”: [], “source”: [] }, { “cell_type”: “code”, “execution_count”: 3, “id”: “bafc440d-4308-4e98-be2f-bb779d994c84”, “metadata”: {}, “outputs”: [], “source”: [ “# Create an explainer”, “explainer = Explainer(”, ” random_forest,“,” features=X,“,” feature_names=feature_names,“,” output=y,“,” class_names=["living room", "bedroom", "dining room"],“,” target_audience="a business person with a solid understanding of basic statistics"“,”)” ] }, { “cell_type”: “code”, “execution_count”: 4, “id”: “dedaa393-4574-4fab-a840-f4da72440579”, “metadata”: {}, “outputs”: [], “source”: [ “explainer.add_permutation_importance()” ] }, { “cell_type”: “code”, “execution_count”: 5, “id”: “906e956c-0f1d-46c4-bf39-7ece79d0b8dc”, “metadata”: {}, “outputs”: [], “source”: [ “explainer.add_feature_importances()” ] }, { “cell_type”: “code”, “execution_count”: 6, “id”: “9855b5ab-db5d-4695-a0e2-3b72b0ec3ea4”, “metadata”: {}, “outputs”: [], “source”: [ “explainer.add_class_importances()”, “explainer.add_instance_importances()”, “explainer.add_feature_class_interactions()” ] }, { “cell_type”: “code”, “execution_count”: 7, “id”: “69d2531e-cb4b-4ab1-92de-5ebb3dfdd502”, “metadata”: {}, “outputs”: [], “source”: [ “explainer.add_lime_instances(X[10:30])” ] }, { “cell_type”: “code”, “execution_count”: 8, “id”: “280a9d2b-7145-4fc5-8ece-888f40568771”, “metadata”: {}, “outputs”: [ { “name”: “stdout”, “output_type”: “stream”, “text”: [ “The LIME results indicate that the width and length of the dresser have the most significant impact on the model’s predictions, while the width and length of the table have a relatively smaller influence.” ] } ], “source”: [ “explainer.explain(”, ” "is there anything interesting from the LIME results, and do it in one sentence"“,”)” ] }, { “cell_type”: “code”, “execution_count”: 9, “id”: “7c7018ad-9cf2-4c2e-98cf-2b9ce2ef0a25”, “metadata”: {}, “outputs”: [ { “name”: “stdout”, “output_type”: “stream”, “text”: [ “Based on the analysis of the model, we have identified the following key findings:”, “”, “1. Feature Importance:”, ” - The length of the dresser has the highest permutation importance, with a mean of 0.236 and a standard deviation of 0.022. This indicates that changes in the length of the dresser have the most significant impact on the model’s predictions.“,” - The width of the dresser is the second most important feature, with a mean permutation importance of 0.179 and a standard deviation of 0.020.“,” - The length and width of the table have lower permutation importances, with means of 0.016 and 0.013 respectively. These features have less influence on the model’s predictions compared to the dresser dimensions.“,”“,”2. Class Importance:“,” - The living room class has an importance of 0.329, indicating that it is influenced by the features to a moderate” ] } ], “source”: [ “# Use the explainer to generate explanations”, “# explanations = explainer.explain(X)”, “explanations = explainer.explain()” ] }, { “cell_type”: “code”, “execution_count”: null, “id”: “30b63ff7-beb0-4b03-a9ef-505bd2e4ff45”, “metadata”: {}, “outputs”: [], “source”: [] } ], “metadata”: { “kernelspec”: { “display_name”: “Python 3 (ipykernel)”, “language”: “python”, “name”: “python3” }, “language_info”: { “codemirror_mode”: { “name”: “ipython”, “version”: 3 }, “file_extension”: “.py”, “mimetype”: “text/x-python”, “name”: “python”, “nbconvert_exporter”: “python”, “pygments_lexer”: “ipython3”, “version”: “3.9.16” } }, “nbformat”: 4, “nbformat_minor”: 5 }</p>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>We’ll start with a super easy example, the obligatory <code>iris</code> dataset with a random forest classifier. Below we set up the model using scikit-learn, everything so far should look very familiar.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> load_iris()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>random_forest <span class="op">=</span> RandomForestClassifier()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since we’ll use GPT-4 for the tutorial, and because GPT-4 is very smart, it probably knows the <code>iris</code> dataset anyway. To trick it a little bit into thinking we have a new dataset, let’s just rename the features and “jumble” the data a bit.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> [<span class="st">"length of table"</span>, <span class="st">"width of table"</span>, <span class="st">"length of dresser"</span>, <span class="st">"width of dresser"</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> iris.data, iris.target</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>random_forest.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier()</pre></div></div></div></div></div>
+</div>
+</div>
+<section id="create-an-explainer" class="level1">
+<h1>Create an explainer</h1>
+<p>from llama_lime.explainer import Explainer explainer = Explainer( random_forest, features=X, feature_names=feature_names, output=y, class_names=[“living room”, “bedroom”, “dining room”], target_audience=“a business person with a solid understanding of basic statistics )</p>
+<p>explainer.add_permutation_importance()</p>
+<p>explainer.add_feature_importances() explainer.add_class_importances() explainer.add_instance_importances() explainer.add_feature_class_interactions() explainer.add_lime_instances(X[10:30]) # Use the explainer to generate explanations # explanations = explainer.explain(X) explanations = explainer.explain()</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
