@@ -4,14 +4,14 @@
     "href": "random_forest_explanation.html",
     "title": "Explaining a Random Forest",
     "section": "",
-    "text": "We’ll start with a super easy example, the obligatory iris dataset with a random forest classifier. Below we set up the model using scikit-learn, everything so far should look very familiar.\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.datasets import load_iris\n\n\niris = load_iris()\nrandom_forest = RandomForestClassifier()\nSince we’ll use GPT-4 for the tutorial, and because GPT-4 is very smart, it probably knows the iris dataset anyway. To trick it a little bit into thinking we have a new dataset, let’s just rename the features and “jumble” the data a bit.\nfeature_names = [\"length of table\", \"width of table\", \"length of dresser\", \"width of dresser\"]\nclass_names = [\"living room\", \"bedroom\", \"dining room\"]\n\nX, y = iris.data, iris.target\nrandom_forest.fit(X, y)\n\nRandomForestClassifier()In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifierRandomForestClassifier()"
+    "text": "We’ll start with a super easy example, the obligatory iris dataset with a random forest classifier. Below we set up the model using scikit-learn, everything so far should look very familiar.\nimport numpy as np\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.datasets import load_iris\n\nnp.random.seed(123)\n\niris = load_iris()\nrandom_forest = RandomForestClassifier()\nSince we’ll use GPT-4 for the tutorial, and because GPT-4 is very smart, it probably knows the iris dataset anyway. To trick it a little bit into thinking we have a new dataset, let’s just rename the features and “jumble” the data a bit.\nfeature_names = [\"length of table\", \"width of table\", \"length of dresser\", \"width of dresser\"]\nclass_names = [\"living room\", \"bedroom\", \"dining room\"]\n\nX = iris.data * 1.8182\ny = iris.target\nrandom_forest.fit(X, y)\n\nRandomForestClassifier()In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifierRandomForestClassifier()"
   },
   {
     "objectID": "random_forest_explanation.html#explaining-the-model",
     "href": "random_forest_explanation.html#explaining-the-model",
     "title": "Explaining a Random Forest",
     "section": "Explaining the Model",
-    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.76423229, 0.40843315, 0.1991242 , 0.17928685]])\n\n\n\nrandom_forest.predict(new_observation)\n\narray([0])"
+    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.12062867, 0.8263408 , 0.60306013, 0.54506801]])\n\n\n\nrandom_forest.predict(new_observation)\n\narray([0])"
   },
   {
     "objectID": "about.html",
