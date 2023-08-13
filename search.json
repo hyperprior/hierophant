@@ -11,7 +11,7 @@
     "href": "random_forest_explanation.html#explaining-the-model",
     "title": "Explaining a Random Forest",
     "section": "Explaining the Model",
-    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.12062867, 0.8263408 , 0.60306013, 0.54506801]])\n\n\n\nrandom_forest.predict(new_observation)\n\narray([0])"
+    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.12062867, 0.8263408 , 0.60306013, 0.54506801]])\n\n\n\nrandom_forest.predict_proba(new_observation)\n\narray([[0.96, 0.04, 0.  ]])\n\n\nNow we know"
   },
   {
     "objectID": "about.html",
