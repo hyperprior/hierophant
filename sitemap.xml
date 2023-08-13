@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://hyperprior.github.io/llama-lime/index.html</loc>
+    <lastmod>2023-08-13T15:17:35.751Z</lastmod>
+  </url>
+  <url>
     <loc>https://hyperprior.github.io/llama-lime/random_forest_explanation.html</loc>
-    <lastmod>2023-08-13T15:14:00.030Z</lastmod>
+    <lastmod>2023-08-13T15:17:36.752Z</lastmod>
   </url>
   <url>
     <loc>https://hyperprior.github.io/llama-lime/about.html</loc>
-    <lastmod>2023-08-13T15:14:00.242Z</lastmod>
+    <lastmod>2023-08-13T15:17:36.952Z</lastmod>
   </url>
 </urlset>

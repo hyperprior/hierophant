@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Llama-lime",
+    "section": "",
+    "text": "🚀 Welcome to llama-lime: Leveraging Large Models for Analysis and Local Interpretable Model Explanations!\nllama-lime is a cutting-edge toolkit designed for data scientists, machine learning practitioners, researchers, and AI enthusiasts. It provides powerful tools to analyze, explore, and explain complex models, including Large Language Models (LLMs), with transparency and ease.\n🎯 What We Offer\nExploration: Dive into your data with our Explorer class, equipped with comprehensive tools for Exploratory Data Analysis (EDA). Understand your data’s underlying patterns, distributions, and relationships like never before. Explanation: Demystify AI with our Explainer class, offering robust explainability techniques such as SHAP and LIME. From text to vision, we support various domains and tasks.\n🌟 Features\nVersatility: Seamlessly integrate llama-lime with diverse models, including Neural Networks, Random Forests, Hugging Face Transformers, and more. Multimodal Support: Analyze and explain models across a wide range of tasks, including classification, object detection, summarization, and more. User-Centric: Enjoy llama-lime’s user-friendly and intuitive APIs, designed for both beginners and experts alike. Community-Driven: We value collaboration and innovation. Contribute, learn, and grow with the llama-lime community.\n🛠️ How to Get Started\nReady to explore the world of explainable AI? Check out our Getting Started Guide, Tutorials, and API Documentation to embark on your journey with llama-lime.\n🤝 Join the Community\nWe welcome contributions and collaboration. Whether you’re a seasoned professional or just starting in AI, there’s room for you in the llama-lime family. Visit our GitHub to connect, contribute, and innovate.\n🎉 Unlock the potential of AI with llama-lime. Explore, Explain, and Empower your models with transparency and confidence!\nFeel free to further customize this description to suit your project’s unique features and goals. It highlights the key aspects of llama-lime, making it an inviting and informative introduction to potential users."
+  },
+  {
     "objectID": "random_forest_explanation.html",
     "href": "random_forest_explanation.html",
     "title": "Explaining a Random Forest",
@@ -11,7 +18,7 @@
     "href": "random_forest_explanation.html#explaining-the-model",
     "title": "Explaining a Random Forest",
     "section": "Explaining the Model",
-    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.12062867, 0.8263408 , 0.60306013, 0.54506801]])\n\n\n\nrandom_forest.predict_proba(new_observation)\n\narray([[0.96, 0.04, 0.  ]])\n\n\nNow we know"
+    "text": "Explaining the Model\nFrom here, we’ve fit the model and we can run predictions against the model with new data.\n\nimport numpy as np\n\nnew_observation = np.random.rand(1, 4)\n\nnew_observation\n\narray([[0.12062867, 0.8263408 , 0.60306013, 0.54506801]])\n\n\n\nrandom_forest.predict_proba(new_observation)\n\narray([[0.96, 0.04, 0.  ]])\n\n\nNow we can say that the most likely class to which our new observation belongs is living room. Of course, from here, we have a lot of questions. And if we don’t then the people we show our models to sure will 😅.\nThe random forest in scikit has some nice utilities for helping to diagnose what our model is doing under the hood."
   },
   {
     "objectID": "about.html",
