@@ -1,19 +1,25 @@
 project:
   type: website
-
 website:
-  title: "Llama-lime"
+  title: llama-lime
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
-
+      - text: Examples
+        menu:
+          - text: Random Forest
+            href: random_forest_explanation.qmd
+          - text: Using LLMs
+            href: using-llms.qmd
+          - text: Using Vector Stores
+            href: using-vectorstores.qmd
+    right:
+      - icon: github
+        href: https://github.com/hyperprior/llama-lime
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-
