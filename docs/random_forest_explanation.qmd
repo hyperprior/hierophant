@@ -113,41 +113,62 @@ Just like before we can print out the SHAP value.
 explainer.add_shap(shap_sample)
 ```
 
+Now we **HIT THE EXPLAIN BUTTON!**.
 
 ```{python}
 explainer.explain()
 ```
 
+
+## But Wait, There's More...
+
+We can add in *feature importances*, *class importances*, *feature-class interactions* to provide even more context.
+
+Since this is based on the SHAP scores, these are model-agnostic versions of these measurements.
 
 ```{python}
 explainer.add_feature_importances()
 explainer.add_class_importances()
-explainer.add_instance_importances()
 explainer.add_feature_class_interactions()
 ```
+
+Again, we just run `explain()` over the scores we are adding.
 
 ```{python}
 explainer.explain()
 ```
+
+## With Extra Lime
+
+We are also baking LIME into the explainability pie. This shouldn't be too surprising given it was the inspiration for the name of the project.
 
 ```{python}
 explainer.add_lime(X[10:30])
-explanations = explainer.explain()
-```
-
-```{python}
 explainer.explain()
 ```
 
-```{python}
-explainer.add_feature_importances()
-explainer.add_class_importances()
-explainer.add_instance_importances()
-explainer.add_feature_class_interactions()
-explainer.add_lime_instances(X[10:30])
-```
+## One Last Trick
+
+the `explain()` method actually takes a `query` argument, which by default asks for a detailed summary of the context we've given it.
+
+But the explainer is just an [LLMChain](https://docs.langchain.com/docs/components/chains/llm-chain). In fact, most of this library is connecting existing methodologies to [LangChain](https://docs.langchain.com/docs/).
+
+So, we are not confined to just summarizing the scores we give it. We can ask it any natural-language question.
 
 ```{python}
-explainer.explain()
+explainer.explain("If we had to drop a single feature which one should it be and why?")
 ```
 
+
+```{python}
+explainer.explain("What is the most compelling story we can tell about this output?")
+```
+
+
+```{python}
+explainer.explain("Should we pick a better model?")
+```
+
+## Conclusion
+
+This should serve as a general overview of what you can do with `llama-lime`. In further tutorials, we'll take a peek under the hood to look at how we can modify the explainer.

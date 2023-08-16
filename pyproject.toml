@@ -8,9 +8,10 @@ readme = "README.md"
 packages = [{include = "llama_lime"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.8,<3.12"
 openai = "^0.27.8"
 torch = "^2.0.1"
+ydata-profiling = "^4.5.1"
 
 
 [tool.poetry.group.dev.dependencies]
