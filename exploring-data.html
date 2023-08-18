@@ -527,7 +527,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   @nb.jit</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2023-08-18 11:38:51,867 INFO worker.py:1621 -- Started a local Ray instance.</code></pre>
+<pre><code>2023-08-18 15:26:48,163 INFO worker.py:1621 -- Started a local Ray instance.</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="3">
@@ -552,6 +552,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   HumanMessage(content='What is the minimum of that column', additional_kwargs={}, example=False),
   AIMessage(content='The minimum value in the "mean area" column is 143.5.', additional_kwargs={}, example=False)],
  'answer': 'The minimum value in the "mean area" column is 143.5.'}</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>explorer.explore(<span class="st">"What are the top three highlights?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>{'question': 'What are the top three highlights?',
+ 'chat_history': [HumanMessage(content='What column has the highest mean?', additional_kwargs={}, example=False),
+  AIMessage(content='The column with the highest mean is "mean area".', additional_kwargs={}, example=False),
+  HumanMessage(content='What is the minimum of that column', additional_kwargs={}, example=False),
+  AIMessage(content='The minimum value in the "mean area" column is 143.5.', additional_kwargs={}, example=False),
+  HumanMessage(content='What are the top three highlights?', additional_kwargs={}, example=False),
+  AIMessage(content='Based on the given context, the top three highlights are:\n\n1. The "mean area" column has a value of 569, indicating a high number of positive values.\n2. The "worst concave points" column has a value of 556, indicating a high number of positive values.\n3. The "mean concave points" column has a value of 556, indicating a high number of positive values.', additional_kwargs={}, example=False)],
+ 'answer': 'Based on the given context, the top three highlights are:\n\n1. The "mean area" column has a value of 569, indicating a high number of positive values.\n2. The "worst concave points" column has a value of 556, indicating a high number of positive values.\n3. The "mean concave points" column has a value of 556, indicating a high number of positive values.'}</code></pre>
 </div>
 </div>
 
