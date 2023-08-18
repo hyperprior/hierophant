@@ -92,6 +92,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -164,7 +167,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#back-and-forth-chatting" id="toc-back-and-forth-chatting" class="nav-link active" data-scroll-target="#back-and-forth-chatting">Back and Forth Chatting</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -187,7 +196,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>A pretty common task in data science is exploratory data analysis. Let’s do that. We’ll use the breast cancer dataset from <code>scikit-learn</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_cancer_dataset():</span>
@@ -202,11 +212,351 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>cancer <span class="op">=</span> load_cancer_dataset()</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>cancer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean radius</th>
+<th data-quarto-table-cell-role="th">mean texture</th>
+<th data-quarto-table-cell-role="th">mean perimeter</th>
+<th data-quarto-table-cell-role="th">mean area</th>
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<th data-quarto-table-cell-role="th">mean concavity</th>
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<th data-quarto-table-cell-role="th">mean symmetry</th>
+<th data-quarto-table-cell-role="th">mean fractal dimension</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">worst texture</th>
+<th data-quarto-table-cell-role="th">worst perimeter</th>
+<th data-quarto-table-cell-role="th">worst area</th>
+<th data-quarto-table-cell-role="th">worst smoothness</th>
+<th data-quarto-table-cell-role="th">worst compactness</th>
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<th data-quarto-table-cell-role="th">worst symmetry</th>
+<th data-quarto-table-cell-role="th">worst fractal dimension</th>
+<th data-quarto-table-cell-role="th">status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>17.99</td>
+<td>10.38</td>
+<td>122.80</td>
+<td>1001.0</td>
+<td>0.11840</td>
+<td>0.27760</td>
+<td>0.30010</td>
+<td>0.14710</td>
+<td>0.2419</td>
+<td>0.07871</td>
+<td>...</td>
+<td>17.33</td>
+<td>184.60</td>
+<td>2019.0</td>
+<td>0.16220</td>
+<td>0.66560</td>
+<td>0.7119</td>
+<td>0.2654</td>
+<td>0.4601</td>
+<td>0.11890</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>20.57</td>
+<td>17.77</td>
+<td>132.90</td>
+<td>1326.0</td>
+<td>0.08474</td>
+<td>0.07864</td>
+<td>0.08690</td>
+<td>0.07017</td>
+<td>0.1812</td>
+<td>0.05667</td>
+<td>...</td>
+<td>23.41</td>
+<td>158.80</td>
+<td>1956.0</td>
+<td>0.12380</td>
+<td>0.18660</td>
+<td>0.2416</td>
+<td>0.1860</td>
+<td>0.2750</td>
+<td>0.08902</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>19.69</td>
+<td>21.25</td>
+<td>130.00</td>
+<td>1203.0</td>
+<td>0.10960</td>
+<td>0.15990</td>
+<td>0.19740</td>
+<td>0.12790</td>
+<td>0.2069</td>
+<td>0.05999</td>
+<td>...</td>
+<td>25.53</td>
+<td>152.50</td>
+<td>1709.0</td>
+<td>0.14440</td>
+<td>0.42450</td>
+<td>0.4504</td>
+<td>0.2430</td>
+<td>0.3613</td>
+<td>0.08758</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>11.42</td>
+<td>20.38</td>
+<td>77.58</td>
+<td>386.1</td>
+<td>0.14250</td>
+<td>0.28390</td>
+<td>0.24140</td>
+<td>0.10520</td>
+<td>0.2597</td>
+<td>0.09744</td>
+<td>...</td>
+<td>26.50</td>
+<td>98.87</td>
+<td>567.7</td>
+<td>0.20980</td>
+<td>0.86630</td>
+<td>0.6869</td>
+<td>0.2575</td>
+<td>0.6638</td>
+<td>0.17300</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>20.29</td>
+<td>14.34</td>
+<td>135.10</td>
+<td>1297.0</td>
+<td>0.10030</td>
+<td>0.13280</td>
+<td>0.19800</td>
+<td>0.10430</td>
+<td>0.1809</td>
+<td>0.05883</td>
+<td>...</td>
+<td>16.67</td>
+<td>152.20</td>
+<td>1575.0</td>
+<td>0.13740</td>
+<td>0.20500</td>
+<td>0.4000</td>
+<td>0.1625</td>
+<td>0.2364</td>
+<td>0.07678</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">564</td>
+<td>21.56</td>
+<td>22.39</td>
+<td>142.00</td>
+<td>1479.0</td>
+<td>0.11100</td>
+<td>0.11590</td>
+<td>0.24390</td>
+<td>0.13890</td>
+<td>0.1726</td>
+<td>0.05623</td>
+<td>...</td>
+<td>26.40</td>
+<td>166.10</td>
+<td>2027.0</td>
+<td>0.14100</td>
+<td>0.21130</td>
+<td>0.4107</td>
+<td>0.2216</td>
+<td>0.2060</td>
+<td>0.07115</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">565</td>
+<td>20.13</td>
+<td>28.25</td>
+<td>131.20</td>
+<td>1261.0</td>
+<td>0.09780</td>
+<td>0.10340</td>
+<td>0.14400</td>
+<td>0.09791</td>
+<td>0.1752</td>
+<td>0.05533</td>
+<td>...</td>
+<td>38.25</td>
+<td>155.00</td>
+<td>1731.0</td>
+<td>0.11660</td>
+<td>0.19220</td>
+<td>0.3215</td>
+<td>0.1628</td>
+<td>0.2572</td>
+<td>0.06637</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">566</td>
+<td>16.60</td>
+<td>28.08</td>
+<td>108.30</td>
+<td>858.1</td>
+<td>0.08455</td>
+<td>0.10230</td>
+<td>0.09251</td>
+<td>0.05302</td>
+<td>0.1590</td>
+<td>0.05648</td>
+<td>...</td>
+<td>34.12</td>
+<td>126.70</td>
+<td>1124.0</td>
+<td>0.11390</td>
+<td>0.30940</td>
+<td>0.3403</td>
+<td>0.1418</td>
+<td>0.2218</td>
+<td>0.07820</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">567</td>
+<td>20.60</td>
+<td>29.33</td>
+<td>140.10</td>
+<td>1265.0</td>
+<td>0.11780</td>
+<td>0.27700</td>
+<td>0.35140</td>
+<td>0.15200</td>
+<td>0.2397</td>
+<td>0.07016</td>
+<td>...</td>
+<td>39.42</td>
+<td>184.60</td>
+<td>1821.0</td>
+<td>0.16500</td>
+<td>0.86810</td>
+<td>0.9387</td>
+<td>0.2650</td>
+<td>0.4087</td>
+<td>0.12400</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">568</td>
+<td>7.76</td>
+<td>24.54</td>
+<td>47.92</td>
+<td>181.0</td>
+<td>0.05263</td>
+<td>0.04362</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.1587</td>
+<td>0.05884</td>
+<td>...</td>
+<td>30.37</td>
+<td>59.16</td>
+<td>268.6</td>
+<td>0.08996</td>
+<td>0.06444</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.2871</td>
+<td>0.07039</td>
+<td>benign</td>
+</tr>
+</tbody>
+</table>
+
+<p>569 rows × 31 columns</p>
+</div>
+</div>
+</div>
 <p>Now, it’s as simple as…</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>explorer <span class="op">=</span> Explorer(cancer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>explorer.explore(<span class="st">"What column has the highest mean?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_lime.explorer <span class="im">import</span> Explorer</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>explorer <span class="op">=</span> Explorer(cancer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/chrisaddy/Library/Caches/pypoetry/virtualenvs/llama-lime-Ipq4cX_Y-py3.11/lib/python3.11/site-packages/numba/core/decorators.py:262: NumbaDeprecationWarning: numba.generated_jit is deprecated. Please see the documentation at: https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-generated-jit for more information and advice on a suitable replacement.
+  warnings.warn(msg, NumbaDeprecationWarning)
+/Users/chrisaddy/Library/Caches/pypoetry/virtualenvs/llama-lime-Ipq4cX_Y-py3.11/lib/python3.11/site-packages/visions/backends/shared/nan_handling.py:50: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  @nb.jit</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-08-18 11:38:51,867 INFO worker.py:1621 -- Started a local Ray instance.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>explorer.explore(<span class="st">"What column has the highest mean?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>{'question': 'What column has the highest mean?',
+ 'chat_history': [HumanMessage(content='What column has the highest mean?', additional_kwargs={}, example=False),
+  AIMessage(content='The column with the highest mean is "mean area".', additional_kwargs={}, example=False)],
+ 'answer': 'The column with the highest mean is "mean area".'}</code></pre>
+</div>
+</div>
+<section id="back-and-forth-chatting" class="level2">
+<h2 class="anchored" data-anchor-id="back-and-forth-chatting">Back and Forth Chatting</h2>
+<p>The <code>Explorer</code>, under the hood, has a memory buffer which we can use to have more natural back and forth chats.</p>
+<p>Without the buffer, if we asked <code>what is the minimum value of that column?</code> after our initial prompt, it wouldn’t know to what <code>that column</code> refers. Now, since it has a memory buffer, it knows we are talking about the <code>column with the highest mean</code>.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>explorer.explore(<span class="st">"What is the minimum of that column"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>{'question': 'What is the minimum of that column',
+ 'chat_history': [HumanMessage(content='What column has the highest mean?', additional_kwargs={}, example=False),
+  AIMessage(content='The column with the highest mean is "mean area".', additional_kwargs={}, example=False),
+  HumanMessage(content='What is the minimum of that column', additional_kwargs={}, example=False),
+  AIMessage(content='The minimum value in the "mean area" column is 143.5.', additional_kwargs={}, example=False)],
+ 'answer': 'The minimum value in the "mean area" column is 143.5.'}</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
