@@ -8,7 +8,7 @@ This command will install all the necessary dependencies and set up the environm
 
 Contributions
 
-There are many ways you can contribute to llama-lime:
+There are many ways you can contribute to hierophant:
 
 Code: If you're a developer, we welcome your code contributions. Whether it's fixing bugs, improving documentation, or adding new features, your code contributions are greatly appreciated.
 

@@ -1,3 +1,6 @@
+from hierophant import statistics
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import RetrievalQA
 import json
 import logging
 import os
@@ -29,20 +32,14 @@ logging.basicConfig()
 logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
 
 
-from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
-
-from llama_lime import statistics
-
-
 class Explorer:
     def __init__(
         self,
         dataset,
         dataset_operations: Optional[list] = None,
         column_operations: Optional[list] = None,
-        llm=ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), temperature=0),
+        llm=ChatOpenAI(openai_api_key=os.getenv(
+            "OPENAI_API_KEY"), temperature=0),
         vectorstore=FAISS,
         embeddings=OpenAIEmbeddings(),
         return_source_documents: bool = True,
@@ -92,26 +89,28 @@ class Explorer:
                     if isinstance(operation, tuple):
                         self._results.append(
                             operation[0].remote(
-                                column={"name": column, "values": self.dataset[column]},
+                                column={"name": column,
+                                    "values": self.dataset[column]},
                                 **operation[1]
                             )
                         )
                     else:
                         self._results.append(
                             operation.remote(
-                                column={"name": column, "values": self.dataset[column]}
+                                column={"name": column,
+                                    "values": self.dataset[column]}
                             )
                         )
             except:
                 pass
-        self.profile = ray.get(self._results)
-        self.profile_documents = [
+        self.profile=ray.get(self._results)
+        self.profile_documents=[
             Document(page_content=json.dumps(result)) for result in self.profile
         ]
-        self.retriever = self.vectorstore.from_documents(
+        self.retriever=self.vectorstore.from_documents(
             documents=self.profile_documents, embedding=self.embeddings
         ).as_retriever()
-        self.chat = ConversationalRetrievalChain.from_llm(
+        self.chat=ConversationalRetrievalChain.from_llm(
             self.llm, retriever=self.retriever, memory=self.memory
         )
 

@@ -3,7 +3,7 @@ import torch
 from sklearn.datasets import make_classification
 from sklearn.ensemble import RandomForestClassifier
 
-from llama_lime.explainer import Explainer
+from hierophant.explainer import Explainer
 
 
 def test_explainer_with_sklearn_model():

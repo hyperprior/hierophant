@@ -19,8 +19,7 @@ import shap
 import os
 from lime import lime_tabular
 
-from llama_lime import templates
-
+from hierophant import templates
 
 
 class Explainer:
@@ -33,7 +32,8 @@ class Explainer:
         class_names=None,
         target_audience="data scientist trying to debug the model and better understand it",
         predictions=None,
-        llm=ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), temperature=0),
+        llm=ChatOpenAI(openai_api_key=os.getenv(
+            "OPENAI_API_KEY"), temperature=0),
     ):
         self.model = model
         self.features = features
@@ -48,15 +48,14 @@ class Explainer:
         self.shap_values = None
         self.lime_instances = None
 
-    
-    def shap(self, sample = None, check_additivity=False):
+    def shap(self, sample=None, check_additivity=False):
         # TODO keep check_additivity=False?
         if not sample:
             sample = self.features
         explainer = shap.Explainer(self.model.predict, sample)
         self.shap_values = explainer(self.features).values
 
-    def add_shap(self, sample = None):
+    def add_shap(self, sample=None):
         self.prompts.append(templates.shap_score_prompt)
 
     @cached_property
@@ -68,7 +67,8 @@ class Explainer:
         feature_importances = feature_importances / np.sum(feature_importances)
 
         if self.feature_names:
-            feature_importances = dict(zip(self.feature_names, feature_importances))
+            feature_importances = dict(
+                zip(self.feature_names, feature_importances))
 
         return feature_importances
 
@@ -107,7 +107,8 @@ class Explainer:
             return None
         feature_class_importances = np.mean(np.abs(self.shap_values), axis=0)
         if normalize:
-            feature_class_importances = feature_class_importances / np.sum(feature_class_importances, axis=0)
+            feature_class_importances = feature_class_importances / \
+                np.sum(feature_class_importances, axis=0)
         feature_class_dict = {}
         for i, feature in enumerate(self.feature_names):
             feature_class_dict[feature] = {}
@@ -115,7 +116,7 @@ class Explainer:
                 feature_class_dict[feature][class_name] = feature_class_importances[i, j]
 
         return feature_class_dict
-        
+
     def add_feature_class_interactions(self):
         self.prompts.append(templates.feature_class_interaction_prompt)
 
@@ -146,24 +147,25 @@ class Explainer:
 
     @property
     def lime_explainer(self):
-        return lime_tabular.LimeTabularExplainer(self.features, 
-                                                            feature_names=self.feature_names, 
-                                                            class_names=self.class_names, 
-                                                            discretize_continuous=True)
+        return lime_tabular.LimeTabularExplainer(self.features,
+                                                 feature_names=self.feature_names,
+                                                 class_names=self.class_names,
+                                                 discretize_continuous=True)
 
     def lime_explanations(self, X):
         all_explanations = []
 
         for instance in X:
-            exp = self.lime_explainer.explain_instance(np.array(instance), self.model.predict_proba, num_features=self.num_features)
+            exp = self.lime_explainer.explain_instance(
+                np.array(instance), self.model.predict_proba, num_features=self.num_features)
             all_explanations.append(exp.as_list())
         return all_explanations
 
     def add_lime(self, X):
         self.lime_instances = self.lime_explanations(X)
         self.prompts.append(templates.lime_instances)
-        
-    def explain(self, query: str ="Please give a detailed summary of your findings."):
+
+    def explain(self, query: str = "Please give a detailed summary of your findings."):
         if isinstance(self.model, torch.nn.Module):
             X_var = Variable(torch.FloatTensor(self.features))
             y_pred = self.model(X_var)
@@ -174,7 +176,6 @@ class Explainer:
         return self._generate_explanations(
             self.features, self.output, self.predictions, query
         )
-
 
     def _generate_explanations(self, X, y, y_pred, query):
         self.prompts.append(
@@ -216,10 +217,8 @@ class Explainer:
             )
         )
 
-
     def shap_waterfall(self, shap_value, max_display=14):
         return shap.plots.waterfall(shap_value, max_display=max_display)
-
 
     @property
     def plots(self):

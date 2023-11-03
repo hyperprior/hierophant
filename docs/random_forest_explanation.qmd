@@ -93,7 +93,7 @@ This is great, but it's still missing something. You still need to explain to a 
 SHAP is great; we don't want to redo the wheel. What we want to do is solve issue 3.) from above. To do so, let's wrap up everything we have in a simple class, similar to the `Explainer` in the `shap` library.
 
 ```{python}
-from llama_lime.explainer import Explainer
+from hierophant.explainer import Explainer
 
 explainer = Explainer(
     random_forest,
@@ -171,4 +171,4 @@ explainer.explain("Should we pick a better model?")
 
 ## Conclusion
 
-This should serve as a general overview of what you can do with `llama-lime`. In further tutorials, we'll take a peek under the hood to look at how we can modify the explainer.
+This should serve as a general overview of what you can do with `hierophant`. In further tutorials, we'll take a peek under the hood to look at how we can modify the explainer.

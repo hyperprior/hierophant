@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "llama-lime"
+name = "hierophant"
 version = "0.1.10"
 description = "Explainable AI with Large Language Models"
 authors = ["chrisaddy <chris.william.addy@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "llama_lime"}]
+packages = [{include = "hierophant"}]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
