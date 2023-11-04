@@ -1,1 +1,1 @@
-Sitemap: https://hyperprior.github.io/llama-lime/sitemap.xml
+Sitemap: https://hyperprior.github.io/hierophant/sitemap.xml

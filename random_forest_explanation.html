@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>llama-lime - Explaining a Random Forest</title>
+<title>hierophant - Explaining a Random Forest</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">llama-lime</span>
+    <span class="navbar-title">hierophant</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -142,16 +142,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./using-vectorstores.html" rel="" target="">
  <span class="dropdown-text">Using Vector Stores</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./exploring-data.html" rel="" target="">
- <span class="dropdown-text">Exploring Data</span></a>
-  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/hyperprior/llama-lime" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/hyperprior/hierophant" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -223,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> iris.target</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>random_forest.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier()</pre></div></div></div></div></div>
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier()</pre></div></div></div></div></div>
 </div>
 </div>
 <section id="explaining-the-model" class="level2">
@@ -303,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="creating-an-explainer-that-explains">Creating an Explainer that Explains</h2>
 <p>SHAP is great; we don’t want to redo the wheel. What we want to do is solve issue 3.) from above. To do so, let’s wrap up everything we have in a simple class, similar to the <code>Explainer</code> in the <code>shap</code> library.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_lime.explainer <span class="im">import</span> Explainer</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hierophant.explainer <span class="im">import</span> Explainer</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> Explainer(</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    random_forest,</span>
@@ -325,11 +321,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Based on the SHAP analysis, we can provide a detailed summary of the findings for the machine learning model. However, it seems that there are no specific results or findings available for this model. It is possible that the model did not provide any SHAP values or that the SHAP analysis was not conducted for this particular model.
 
-Without any specific results, it is difficult to provide a detailed summary of the findings. It is important to note that SHAP values are useful in understanding the contribution of each feature towards the model's predictions. They help in explaining why the model made the predictions it did by quantifying the impact of each feature.
+Without any specific results, it is difficult to provide a detailed summary of the findings. It is important to note that SHAP values are useful in understanding the contribution of each feature towards the model's predictions. They provide insights into how each feature affects the model's output and can help in interpreting the model's decision-making process.
 
-In a typical scenario, if we had the SHAP values, we could have identified the features that had the most significant positive or negative impact on the model's predictions. This information would have been valuable for a business person with a solid understanding of basic statistics, as it would have provided insights into which features are driving the model's predictions and how they are influencing the outcomes.
+If there were specific results available, we could have provided a summary of the findings by analyzing the SHAP values for each feature. We could have identified the features that had the most significant positive or negative impact on the model's predictions. This information would have been valuable in understanding the factors driving the model's decisions and potentially identifying areas for improvement or further investigation.
 
-However, since we do not have any specific results or findings, we cannot provide a detailed summary of the model's behavior or the reasons behind its predictions. It is recommended to further investigate the model or consult with a data scientist to obtain more insights into its behavior and predictions.</code></pre>
+However, since there are no specific results available, we cannot provide a detailed summary of the findings for this model. It is recommended to conduct the SHAP analysis again or explore other interpretability techniques to gain insights into the model's predictions.</code></pre>
 </div>
 </div>
 </section>
@@ -348,9 +344,7 @@ However, since we do not have any specific results or findings, we cannot provid
 <div class="cell-output cell-output-stdout">
 <pre><code>Based on the analysis of the SHAP values, feature importance, class importances, and feature-class interactions, we did not find any significant findings or insights to report. The model's predictions do not appear to be strongly influenced by any specific features, classes, or interactions between features and classes. This suggests that the model's predictions are not heavily reliant on any particular factors and are likely a result of a combination of multiple features and classes.
 
-It is important to note that these findings are specific to the dataset and model architecture used for this analysis. Different datasets or models may yield different results. Additionally, the absence of significant findings does not necessarily imply that the model is not performing well or that it is not capturing important patterns in the data. It simply means that the SHAP analysis did not reveal any specific features, classes, or interactions that have a strong influence on the model's predictions.
-
-Further analysis and exploration may be required to gain a deeper understanding of the model's behavior and performance. This could include examining other evaluation metrics, conducting additional feature engineering, or exploring different model architectures.</code></pre>
+It is important to note that these findings are specific to the dataset and model architecture used for this analysis. Different datasets or models may yield different results. Additionally, the absence of significant findings does not necessarily imply that the model is not performing well or that it lacks interpretability. It simply means that the model's predictions are not strongly driven by any specific features or classes in this particular analysis.</code></pre>
 </div>
 </div>
 </section>
@@ -367,11 +361,11 @@ The output consists of a list of tuples, where each tuple contains a feature and
 
 For example, in the first tuple, the feature "width of dresser" with a value less than or equal to 0.55 has a negative weight of -0.195. This suggests that a smaller width of the dresser decreases the prediction. Similarly, the feature "length of dresser" with a value less than or equal to 2.91 has a negative weight of -0.176, indicating that a shorter length of the dresser also decreases the prediction.
 
-It's important to note that the weights can be positive or negative, indicating whether a feature positively or negatively contributes to the prediction. The magnitude of the weight represents the strength of the feature's influence on the prediction.
+It's important to note that the weights represent the relative importance of each feature in the prediction for a specific instance. The magnitude of the weight indicates the strength of the feature's influence, regardless of its direction (positive or negative).
 
-By analyzing the feature contributions for each instance, we can gain insights into which features are most influential in determining the prediction for that instance. This information can be valuable for understanding the decision-making process of the model and identifying the key factors driving the predictions.
+By analyzing the feature contributions across multiple instances, we can gain insights into the factors that are driving the model's predictions. This information can be valuable for understanding the decision-making process of the model and identifying the key features that contribute to specific outcomes.
 
-Please note that the specific findings and interpretations may vary depending on the actual values and features in the dataset.</code></pre>
+However, without specific numerical values or context about the problem domain, it is difficult to draw definitive conclusions from the provided feature contributions. Further analysis and interpretation are necessary to fully understand the implications of these findings in a business context.</code></pre>
 </div>
 </div>
 </section>
@@ -411,17 +405,17 @@ Overall, this analysis highlights the importance of considering the dimensions o
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>explainer.explain(<span class="st">"Should we pick a better model?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Based on the provided analysis, there is not enough information to determine whether we should pick a better model. The analysis focused on explaining the predictions made by the model using different techniques such as SHAP values, feature importance, class importances, and feature-class interactions. However, no specific evaluation or comparison of the model's performance or accuracy was provided.
+<pre><code>Based on the provided analysis, it is not possible to determine whether we should pick a better model or not. The analysis focused on explaining the predictions made by the model using different techniques such as SHAP values, feature importance, class importances, and feature-class interactions. However, no specific findings or results were provided in the analysis.
 
-To determine whether we should pick a better model, we would need additional information such as the model's performance metrics (e.g., accuracy, precision, recall) and a comparison with other models or benchmarks. It is important to assess the model's performance and consider factors such as its predictive accuracy, interpretability, computational efficiency, and suitability for the specific business problem at hand.
+To make a decision on whether to pick a better model, we would need more information about the performance of the current model, such as its accuracy, precision, recall, or any other relevant evaluation metrics. Additionally, it would be helpful to compare the performance of the current model with other potential models to assess their relative strengths and weaknesses.
 
-Without this additional information, it is not possible to make a conclusive decision about whether a better model should be chosen.</code></pre>
+Without this additional information, it is not possible to determine if a better model should be chosen.</code></pre>
 </div>
 </div>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This should serve as a general overview of what you can do with <code>llama-lime</code>. In further tutorials, we’ll take a peek under the hood to look at how we can modify the explainer.</p>
+<p>This should serve as a general overview of what you can do with <code>hierophant</code>. In further tutorials, we’ll take a peek under the hood to look at how we can modify the explainer.</p>
 
 
 </section>
