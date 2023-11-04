@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hierophant"
-version = "0.1.10"
+version = "0.1.11"
 description = "Explainable AI with Large Language Models"
 authors = ["chrisaddy <chris.william.addy@gmail.com>"]
 license = "MIT"
