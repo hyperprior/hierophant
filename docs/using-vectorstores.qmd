@@ -1,7 +1,0 @@
----
-title: Using Retrievers
----
-
-## Coming Soon
-
-### SVM Retrievers
