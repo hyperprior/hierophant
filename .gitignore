@@ -4,4 +4,5 @@ __pycache__/
 .ruff_cache/
 dist/
 *.egg-info/
-runs/
+runs/*
+!runs/first-light-*.jsonl
