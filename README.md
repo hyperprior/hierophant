@@ -10,12 +10,12 @@ kept, so you only read claims that held up.
 ```python
 import hierophant as hp
 
-ds = hp.datasets.load("diabetes")          # data + a fitted GBDT
+ds = hp.datasets.load("diabetes")  # data + a fitted GBDT
 h = hp.Hierophant.from_dataset(ds, llm="ollama:qwen3:8b")
 
 report = h.ask("Why is this patient's predicted progression low?", row=0)
-print(report)             # only the sentences whose claims checked out
-print(report.details())   # every claim, its verdict, and the evidence
+print(report)  # only the sentences whose claims checked out
+print(report.details())  # every claim, its verdict, and the evidence
 ```
 
 Bring your own model with `hp.Hierophant(model, X, target="...")`. Any scikit-learn-style
