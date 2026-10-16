@@ -18,7 +18,8 @@ from hierophant.model import Model
 SYSTEM = """You explain the predictions of a machine-learning model to {audience}.
 
 You get the model's prediction for one row and that row's SHAP contributions. Answer \
-the question in a few short sentences. Every sentence must make exactly one checkable \
+the question in at most {max_sentences} plain-English sentences, leading with what \
+matters most. Don't list every feature. Every sentence must make exactly one checkable \
 claim about this row, as structured data, using one of these kinds:
 
   {{"kind": "direction", "feature": F, "effect": "up" | "down"}}
@@ -104,6 +105,7 @@ class Hierophant:
         categories: dict[str, list[str]] | None = None,
         audience: str = "a data scientist debugging the model",
         top: int | None = 8,
+        max_sentences: int = 5,
     ):
         self.model = Model(model, X, class_names=class_names)
         self.X = X
@@ -112,6 +114,7 @@ class Hierophant:
         self.llm = backend(llm)
         self.audience = audience
         self.top = top
+        self.max_sentences = max_sentences
         self.explainer = Explainer(self.model, target, categories)
         self.verifier = Verifier(self.model)
 
@@ -133,7 +136,9 @@ class Hierophant:
         t0 = time.perf_counter()
         ev = self.explainer.row(self.X, row)
         messages = [
-            Message("system", SYSTEM.format(audience=self.audience)),
+            Message(
+                "system", SYSTEM.format(audience=self.audience, max_sentences=self.max_sentences)
+            ),
             Message(
                 "user",
                 USER.format(
@@ -167,18 +172,30 @@ class Hierophant:
 
 
 def parse_sentences(text: str) -> list[Sentence]:
-    """Pull the JSON out of an LLM reply, tolerating fences and chatter around it."""
+    """Pull the JSON out of an LLM reply, tolerating fences and chatter around it.
+
+    Accepts ``{"sentences": [...]}`` or a bare ``[...]``: small models often drop
+    the wrapper object.
+    """
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.S)  # reasoning models
-    start, end = text.find("{"), text.rfind("}")
-    if start < 0 or end <= start:
-        raise ValueError("reply contained no JSON object")
-    try:
-        data = json.loads(text[start : end + 1])
-    except json.JSONDecodeError as e:
-        raise ValueError(f"reply JSON did not parse: {e}") from e
-    items = data.get("sentences") if isinstance(data, dict) else None
-    if not isinstance(items, list):
-        raise ValueError("reply JSON has no 'sentences' list")
+    decoder = json.JSONDecoder()
+    items, err = None, "reply contained no JSON"
+    for m in re.finditer(r"[\[{]", text):
+        try:
+            data, _ = decoder.raw_decode(text, m.start())
+        except json.JSONDecodeError as e:
+            err = f"reply JSON did not parse: {e}"
+            continue
+        if isinstance(data, dict) and isinstance(data.get("sentences"), list):
+            items = data["sentences"]
+        elif isinstance(data, list):
+            items = data
+        else:
+            err = "reply JSON has no 'sentences' list"
+            continue
+        break
+    if items is None:
+        raise ValueError(err)
     out = []
     for item in items:
         if not isinstance(item, dict) or not item.get("text"):

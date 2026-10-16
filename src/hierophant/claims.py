@@ -7,7 +7,8 @@ Claim types (all about a single row):
 
 - ``direction``: this row's value of ``feature`` pushed the output up or down.
   Checked by intervention: swap the feature for typical values from the data
-  and see which way the output moves.
+  and see which way the output moves. If that disagrees with the SHAP sign the
+  model has interactions, and the claim is inconclusive, not refuted.
 - ``top``: ``feature`` was the single largest contributor (by |SHAP|).
 - ``rank``: ``feature`` contributed more than ``other`` (by |SHAP|).
 - ``magnitude``: ``feature`` contributed about ``value`` (signed, output units).
@@ -112,8 +113,11 @@ class Verifier:
             )
             if abs(delta) <= tol:
                 return Check(Verdict.INCONCLUSIVE, note + "; too small to call")
-            pushed_up = delta > 0
-            ok = pushed_up == (claim.effect == "up")
+            if abs(s) > tol and (s > 0) != (delta > 0):
+                # Interactions: SHAP and the one-feature swap point opposite ways.
+                # Neither is "the truth", so don't punish a claim that follows either.
+                return Check(Verdict.INCONCLUSIVE, note + "; SHAP and intervention disagree")
+            ok = (delta > 0) == (claim.effect == "up")
             return Check(Verdict.VERIFIED if ok else Verdict.REFUTED, note)
 
         if claim.kind == "top":

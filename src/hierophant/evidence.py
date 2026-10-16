@@ -55,10 +55,9 @@ class RowEvidence:
         for c in cs:
             lines.append(f"- {c.feature} = {c.value}: {sig(c.shap):+}")
         if top and len(self.contributions) > top:
-            rest = sum(c.shap for c in self.contributions[top:])
-            lines.append(
-                f"- ({len(self.contributions) - top} other features combined): {sig(rest):+}"
-            )
+            # No total for the rest: given a number, models make claims about it
+            # as if it were a feature (10 of 14 refuted claims on first light).
+            lines.append(f"({len(self.contributions) - top} smaller features not shown.)")
         return "\n".join(lines)
 
 

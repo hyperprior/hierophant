@@ -115,3 +115,28 @@ def test_prompt_carries_rounded_evidence(h):
     system, user = h.llm.seen[0]
     assert "JSON" in system.content and "why is this low?" in user.content
     assert "e-0" not in user.content  # no raw float dumps
+
+
+def test_accepts_bare_list(h):
+    # Qwen3-4B on first light: dropped the {"sentences": ...} wrapper every time.
+    ev, top, _ = truth(h)
+    h.llm = hp.Replay(
+        [json.dumps([{"text": "ok", "claim": {"kind": "top", "feature": top.feature}}])]
+    )
+    r = h.ask("why?", row=0)
+    assert r.error is None and r.sentences[0].check.verdict == Verdict.VERIFIED
+
+
+def test_shap_intervention_disagreement_is_inconclusive(diabetes):
+    # Diabetes row 3, s4: SHAP says -5.8 but swapping s4 alone nudges the output up.
+    h = hp.Hierophant.from_dataset(diabetes, llm=hp.Replay([]))
+    ev = h.explainer.row(h.X, 3)
+    x = h.X.iloc[[3]]
+    for c in ev.contributions:
+        delta = h.verifier.intervene(x, c.feature, None)
+        tol = 0.01 * h.verifier.scale(None)
+        if abs(c.shap) > tol and abs(delta) > tol and (c.shap > 0) != (delta > 0):
+            claim = Claim("direction", c.feature, effect="up" if c.shap > 0 else "down")
+            assert h.verifier.check(claim, x, ev).verdict == Verdict.INCONCLUSIVE
+            return
+    pytest.skip("no disagreement on this row with this seed")
